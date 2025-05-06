@@ -3,17 +3,12 @@ class Checkbook:
         self.balance = 0.0
 
     def deposit(self, amount):
-        if amount <= 0:
-            print("Deposit amount must be greater than 0.")
-        else:
         self.balance += amount
         print("Deposited ${:.2f}".format(amount))
         print("Current Balance: ${:.2f}".format(self.balance))
 
     def withdraw(self, amount):
-        if amount <= 0:
-            print("Withdrawal amount must be greater than 0.")
-        elif amount > self.balance:
+        if amount > self.balance:
             print("Insufficient funds to complete the withdrawal.")
         else:
             self.balance -= amount
@@ -23,31 +18,29 @@ class Checkbook:
     def get_balance(self):
         print("Current Balance: ${:.2f}".format(self.balance))
 
+def get_valid_amount(prompt):
+    while True:
+        try:
+            amount = float(input(prompt))
+            if amount < 0:
+                print("Amount cannot be negative. Please try again.")
+            else:
+                return amount
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
 def main():
     cb = Checkbook()
     while True:
         action = input("What would you like to do? (deposit, withdraw, balance, exit): ").strip().lower()
         if action == 'exit':
-            print("Exiting the program. Goodbye!")
             break
         elif action == 'deposit':
-            try:
-                amount = float(input("Enter the amount to deposit: $"))
-                if amount <= 0:
-                    print("Please enter a positive amount.")
-                else:
-                    cb.deposit(amount)
-            except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+            amount = get_valid_amount("Enter the amount to deposit: $")
+            cb.deposit(amount)
         elif action == 'withdraw':
-            try:
-                amount = float(input("Enter the amount to withdraw: $"))
-                if amount <= 0:
-                    print("Please enter a positive amount.")
-                else:
-                    cb.withdraw(amount)
-            except ValueError:
-                print("Invalid input. Please enter a numeric value.")
+            amount = get_valid_amount("Enter the amount to withdraw: $")
+            cb.withdraw(amount)
         elif action == 'balance':
             cb.get_balance()
         else:
@@ -55,3 +48,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
