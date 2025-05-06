@@ -5,8 +5,9 @@ def factorial(n):
     result = 1
     while n > 1:
         result *= n
-        # Erreur ici : il manque 'n -= 1', ce qui rend la boucle infinie
+        n -= 1  # <- correction ici
     return result
 
-print(factorial(int(sys.argv[1])))
+f = factorial(int(sys.argv[1]))
+print(f)
 
